@@ -8,19 +8,19 @@
 
 <p align="center">
   <img width="640" src="./steps/1.png" alt="User-Agent Switcher for Chrome 的配置">
-  <div align="center">User-Agent Switcher for Chrome 的配置<div>
+  <p align="center">User-Agent Switcher for Chrome 的配置<p>
 </p>
 
 <p align="center">
   <img width="320" src="./steps/2.png" alt="UA 切换">
-  <div align="center">UA 切换<div>
+  <p align="center">UA 切换<p>
 </p>
 
 3. 打开浏览器，按 F12 打开开发者工具，先切换到移动设备视图（图中 ① 所示的红框按钮），接着再点击 Sources 选项卡，点击下方左边的 Snippets 选项卡（如果没有，请点击两个向右的箭头）。然后再点击 New snippet 创建一个脚本，之后把 main.js 里的内容统统粘贴进去即可。
 
 <p align="center">
   <img width="640" src="./steps/3.png" alt="运行步骤 1">
-  <div align="center">运行步骤 1<div>
+  <p align="center">运行步骤 1<p>
 </p>
 
 4. 在左边的页面点击【我的】，登录京东账号。
@@ -29,12 +29,12 @@
 
 <p align="center">
   <img width="640" src="./steps/4.png" alt="运行步骤 2">
-  <div align="center">运行步骤 2<div>
+  <p align="center">运行步骤 2<p>
 </p>
 
 6. 任务执行完成后，就可以到京东 APP 见证奇迹的时刻。
 
 <p align="center">
   <img width="320" src="./steps/5.png" alt="运行结果">
-  <div align="center">运行结果<div>
+  <p align="center">运行结果<p>
 </p>
