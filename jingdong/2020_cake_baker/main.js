@@ -1,6 +1,14 @@
 var secretp = "";
 var taskList = [];
 
+// 恢复被覆盖的 alert 函数
+(() => {
+  var frame = document.createElement("iframe");
+  frame.style.display = "none";
+  document.body.appendChild(frame);
+  window.alert = frame.contentWindow.alert;
+})();
+
 // 请求函数
 var request = (functionId, body = {}) =>
   fetch("https://api.m.jd.com/client.action", {
@@ -101,7 +109,7 @@ var start = () => {
     setTimeout(collector, (2 + task.waitDuration) * 1000, task);
   } else {
     console.log("@任务已完成！");
-    alert('任务完成！')
+    alert("任务完成！");
   }
 };
 
