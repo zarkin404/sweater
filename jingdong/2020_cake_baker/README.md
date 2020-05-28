@@ -12,8 +12,8 @@
 </p>
 
 <p align="center">
-  <img width="320" src="https://s1.ax1x.com/2020/05/28/tZE8Df.png" alt="UA 切换">
-  <p align="center">UA 切换<p>
+  <img width="480" src="https://s1.ax1x.com/2020/05/28/tZE8Df.png" alt="修改 UA">
+  <p align="center">修改 UA<p>
 </p>
 
 3. 之后点击 Sources 选项卡，并点击下方左边的 Snippets 选项卡（如果没有，请点击两个向右的箭头）。然后再点击 New snippet 创建一个脚本，之后把 main.js 里的内容统统粘贴进去即可。
