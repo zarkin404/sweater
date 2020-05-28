@@ -4,11 +4,11 @@
 
 1. 建议使用 Chrome 最新版。
 
-2. 浏览器的 User-Agent 必须包含 jdapp，如果是 Chrome 浏览器，可以在 network condition 中进行修改。
+2. 浏览器的 User-Agent 必须包含 jdapp，如果是 Chrome 浏览器，可以按 F12 在开发者工具中的 Network Conditions 中进行修改。
 
 <p align="center">
-  <img width="640" src="https://s1.ax1x.com/2020/05/28/tZEGb8.png" alt="打开 network condition">
-  <p align="center">打开 network condition<p>
+  <img width="640" src="https://s1.ax1x.com/2020/05/28/tZEGb8.png" alt="打开 Network Conditions">
+  <p align="center">打开 Network Conditions<p>
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
   <p align="center">UA 切换<p>
 </p>
 
-3. 打开浏览器，先按 F12 打开开发者工具，再点击 Sources 选项卡，之后点击下方左边的 Snippets 选项卡（如果没有，请点击两个向右的箭头）。然后再点击 New snippet 创建一个脚本，之后把 main.js 里的内容统统粘贴进去即可。
+3. 之后点击 Sources 选项卡，并点击下方左边的 Snippets 选项卡（如果没有，请点击两个向右的箭头）。然后再点击 New snippet 创建一个脚本，之后把 main.js 里的内容统统粘贴进去即可。
 
 <p align="center">
   <img width="640" src="https://s1.ax1x.com/2020/05/27/tEozUH.png" alt="运行步骤 1">
