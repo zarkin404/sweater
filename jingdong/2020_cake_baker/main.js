@@ -65,16 +65,15 @@ var superiorTask = (() => {
           );
 
           result[taskCollectionContentKeyName].forEach((taskCollection) => {
-            // 只取任务商品前五个
-            Array(5)
+            Array(taskCollection.maxTimes - taskCollection.times)
               .fill(true)
-              .forEach((_, key) => {
+              .forEach((_, index) => {
                 taskList.unshift({
                   taskName: taskCollection.taskName,
                   taskId: taskCollection.taskId,
                   taskType: taskCollection.taskType,
                   waitDuration: taskCollection.waitDuration,
-                  itemId: taskCollection.productInfoVos[key].itemId,
+                  itemId: taskCollection.productInfoVos[index].itemId,
                 });
               });
           });
@@ -103,8 +102,10 @@ var start = () => {
   var task = taskList.pop();
 
   if (task) {
-    // 先领取任务
-    setTimeout(collector, 0, task, true);
+    // 除了小精灵和连签外的任务要先领取
+    if (!["小精灵", "连签得金币"].includes(task.taskName)) {
+      setTimeout(collector, 0, task, true);
+    }
     // 至少等 2 秒再执行任务
     setTimeout(collector, (2 + task.waitDuration) * 1000, task);
   } else {
@@ -117,7 +118,7 @@ var start = () => {
   // 获取基础信息
   Promise.all([
     request("cakebaker_getHomeData"),
-    // 骚微慢一点点请求，避免提示【点太快啦！等下再来吧】
+    // 请求稍微慢点，避免提示【点太快啦！等下再来吧】
     new Promise((resolve) => {
       setTimeout(() => {
         request("cakebaker_getTaskDetail").then(resolve);
@@ -135,9 +136,9 @@ var start = () => {
           !~navigator.userAgent.indexOf("jdapp")
         ) {
           console.log("当前浏览器 UA：" + navigator.userAgent);
-          throw `【错误信息：${taskData.data.bizMsg}】任务详情获取失败，请确保已设置正确的浏览器 UA。`;
+          throw "任务详情获取失败，请确保已设置正确的浏览器 User-Agent。";
         } else {
-          throw "未知错误";
+          throw `【错误信息：${taskData.data}】`;
         }
       }
 
@@ -146,9 +147,6 @@ var start = () => {
 
       // 生成任务队列
       taskData.data.result.taskVos.forEach(async (taskCollection) => {
-        // TODO: 用于调试跳过部分任务
-        // if (["小精灵", "连签得金币"].includes(taskCollection.taskName)) return;
-
         // 跳过部分邀请任务
         if (
           ["邀请好友助力", "所在战队成员满5人"].includes(
@@ -174,30 +172,20 @@ var start = () => {
 
         if (!taskCollectionContent) return;
 
-        if (taskCollectionContent instanceof Array) {
-          taskCollectionContent.forEach((taskItem) => {
+        Array(taskCollection.maxTimes - taskCollection.times)
+          .fill(true)
+          .forEach((_, index) => {
             taskList.push({
               taskName: taskCollection.taskName,
               taskId: taskCollection.taskId,
               taskType: taskCollection.taskType,
               waitDuration: taskCollection.waitDuration,
-              itemId: taskItem.itemId,
+              itemId:
+                taskCollectionContent instanceof Array
+                  ? taskCollectionContent[index].itemId
+                  : taskCollectionContent.itemId,
             });
           });
-        } else {
-          // 像小精灵这种多次简单任务的要根据 maxTimes 循环执行多次
-          Array(taskCollection.maxTimes)
-            .fill(true)
-            .forEach(() => {
-              taskList.push({
-                taskName: taskCollection.taskName,
-                taskId: taskCollection.taskId,
-                taskType: taskCollection.taskType,
-                waitDuration: taskCollection.waitDuration,
-                itemId: taskCollectionContent.itemId,
-              });
-            });
-        }
       });
 
       console.log(taskList);
