@@ -4,15 +4,15 @@
 
 1. 建议使用 Chrome 最新版。
 
-2. 浏览器的 User-Agent 必须包含 jdapp，如果是 Chrome 浏览器，可以使用 [User-Agent Switcher for Chrome](https://chrome.google.com/webstore/detail/user-agent-switcher-for-c/djflhoibgkdhkhhcedjiklpkjnoahfmg) 扩展进行修改。
+2. 浏览器的 User-Agent 必须包含 jdapp，如果是 Chrome 浏览器，可以在 network condition 中进行修改。
 
 <p align="center">
-  <img width="640" src="https://s1.ax1x.com/2020/05/28/tVzZWT.png" alt="User-Agent Switcher for Chrome 的配置">
-  <p align="center">User-Agent Switcher for Chrome 的配置<p>
+  <img width="640" src="https://s1.ax1x.com/2020/05/28/tZEGb8.png" alt="打开 network condition">
+  <p align="center">打开 network condition<p>
 </p>
 
 <p align="center">
-  <img width="320" src="https://s1.ax1x.com/2020/05/28/tVzVYV.gif" alt="UA 切换">
+  <img width="320" src="https://s1.ax1x.com/2020/05/28/tZE8Df.png" alt="UA 切换">
   <p align="center">UA 切换<p>
 </p>
 
