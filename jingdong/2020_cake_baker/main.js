@@ -138,7 +138,7 @@ var start = () => {
           console.log("当前浏览器 UA：" + navigator.userAgent);
           throw "任务详情获取失败，请确保已设置正确的浏览器 User-Agent。";
         } else {
-          throw `【错误信息：${taskData.data}】`;
+          throw `【错误信息：${JSON.stringify(taskData.data)}】`;
         }
       }
 
