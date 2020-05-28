@@ -7,12 +7,12 @@
 2. 浏览器的 User-Agent 必须包含 jdapp，如果是 Chrome 浏览器，可以使用 [User-Agent Switcher for Chrome](https://chrome.google.com/webstore/detail/user-agent-switcher-for-c/djflhoibgkdhkhhcedjiklpkjnoahfmg) 扩展进行修改。
 
 <p align="center">
-  <img width="640" src="https://s1.ax1x.com/2020/05/27/tET9PA.png" alt="User-Agent Switcher for Chrome 的配置">
+  <img width="640" src="https://s1.ax1x.com/2020/05/28/tVzZWT.png" alt="User-Agent Switcher for Chrome 的配置">
   <p align="center">User-Agent Switcher for Chrome 的配置<p>
 </p>
 
 <p align="center">
-  <img width="320" src="https://s1.ax1x.com/2020/05/27/tETS5d.png" alt="UA 切换">
+  <img width="320" src="https://s1.ax1x.com/2020/05/28/tVzVYV.gif" alt="UA 切换">
   <p align="center">UA 切换<p>
 </p>
 
@@ -41,4 +41,4 @@
 
 ## 注意事项
 
-1. 有网友提示每次调用后任务可能会不一样，建议脚本多跑一两次。
+1. 有网友提示每次调用后任务可能会不一样，建议脚本多跑一两次，一般三次就能跑完全部任务。
