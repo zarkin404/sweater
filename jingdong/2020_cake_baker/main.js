@@ -1,6 +1,23 @@
 var MAX_CYCLES = 3;
 var currentCycle = 0;
 
+// 请求函数
+var request = (functionId, body = {}) =>
+  fetch("https://api.m.jd.com/client.action", {
+    body: `functionId=${functionId}&body=${JSON.stringify(
+      body
+    )}&client=wh5&clientVersion=1.0.0`,
+    headers: {
+      "content-type": "application/x-www-form-urlencoded",
+    },
+    method: "POST",
+    credentials: "include",
+  });
+
+console.log("💡 正在执行抢炸弹任务");
+// 战队抢炸弹，感谢 @elevenDimension 提供 functionId
+request("cakebaker_pk_getCakeBomb");
+
 // 主程序
 var main = (executeNextCycle) => {
   var secretp = "";
@@ -13,19 +30,6 @@ var main = (executeNextCycle) => {
     document.body.appendChild(frame);
     window.alert = frame.contentWindow.alert;
   })();
-
-  // 请求函数
-  var request = (functionId, body = {}) =>
-    fetch("https://api.m.jd.com/client.action", {
-      body: `functionId=${functionId}&body=${JSON.stringify(
-        body
-      )}&client=wh5&clientVersion=1.0.0`,
-      headers: {
-        "content-type": "application/x-www-form-urlencoded",
-      },
-      method: "POST",
-      credentials: "include",
-    });
 
   // 模拟任务完成请求
   var collector = (task, actionType) => {
@@ -124,12 +128,7 @@ var main = (executeNextCycle) => {
     // 获取基础信息
     Promise.all([
       request("cakebaker_getHomeData"),
-      // 请求稍微慢点，避免提示【点太快啦！等下再来吧】
-      new Promise((resolve) => {
-        setTimeout(() => {
-          request("cakebaker_getTaskDetail").then(resolve);
-        }, 1000);
-      }),
+      request("cakebaker_getTaskDetail"),
     ])
       .then(([homeData, taskData]) =>
         Promise.all([homeData.json(), taskData.json()])
@@ -209,7 +208,8 @@ var excuteMain = () => {
     currentCycle++;
 
     if (currentCycle < MAX_CYCLES) {
-      excuteMain();
+      // 延迟一些时间才执行下一轮
+      setTimeout(excuteMain, 10000);
     } else {
       console.log("@任务已完成！");
       alert("任务完成！");
