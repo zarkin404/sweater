@@ -39,7 +39,18 @@ var main = (executeNextCycle) => {
       taskId: task.taskId,
       itemId: task.itemId,
       actionType: actionType ? 1 : undefined,
-      safeStr: JSON.stringify({ secretp }),
+      safeStr: {
+        secretp,
+
+        // 请自行抓包后，把校验信息填充到下面
+        info: "",
+        encrypt: 0,
+        is_trust: true,
+        time: 0,
+        nonstr: "",
+        token: "",
+        sign: "",
+      },
     })
       .then((res) => res.json())
       .then((res) => {

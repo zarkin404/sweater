@@ -1,4 +1,18 @@
-# 2020 京东 618 叠蛋糕活动
+# 【非小白玩物】2020 京东 618 叠蛋糕活动
+
+## 特殊说明
+
+感谢 @h2oiswater 分享。
+
+由于官方更改了接口逻辑，导致该脚本无法按照之前的参数列表进行请求，所以后面使用该脚本前，需要自行进行抓包，获取关键的校验信息，并填到 [main.js#L46-L52](./main.js#L46-L52) 中，具体修改流程详见 [issue 27](https://github.com/zarkin404/sweater/issues/27)。**每次跑脚本前只有填入校验信息后才能开始进行【使用步骤】。**
+
+## 抓包工具推荐
+
+IOS：stream 或者 thor 或者 http catcher
+
+Android：http catcher
+
+PC：[whistle](http://wproxy.org/whistle/) 或者 [fiddler](https://www.telerik.com/fiddler) 或者 [charles](https://www.charlesproxy.com/)
 
 ## 使用步骤
 
@@ -38,7 +52,3 @@
   <img width="320" src="./steps/5.png" alt="运行结果">
   <p align="center">运行结果<p>
 </p>
-
-## 注意事项
-
-1. 有网友提示每次调用后任务可能会不一样，建议脚本多跑一两次，一般三次就能跑完全部任务。
