@@ -25,7 +25,7 @@
 
 4. 访问 [京东移动端网页](https://m.jd.com/)，点击底部导航栏的【我的】，登录京东账号。
 
-5. 登录完成后，再右键点击脚本运行。如果任务全部完成，Console 会提示，所以请耐心等待。
+5. 登录完成后，再右键点击脚本运行。如果任务全部完成，会有弹窗提示，所以请耐心等待。
 
 <p align="center">
   <img width="640" src="../2020_cake_baker/steps/4.png" alt="运行步骤 2">
@@ -35,6 +35,12 @@
 6. 任务执行完成后，就可以到京东 APP 见证奇迹的时刻。
 
 <p align="center">
-  <img width="320" src="../2020_cake_baker/steps/5.png" alt="运行结果">
+  <img width="320" src="./steps/result.jpg" alt="运行结果">
   <p align="center">运行结果<p>
 </p>
+
+## FAQ
+
+1. 为什么执行完脚本后有未完成的任务？
+
+答：多执行几遍脚本即可。

@@ -1,5 +1,5 @@
 (() => {
-  // 请求间隔，单位：毫秒（不建议小于 2000 毫秒）
+  // 请求间隔，单位：毫秒（不能小于 2000 毫秒）
   const REQUEST_INTERVAL = 2000
 
   // API 名称映射表
@@ -15,51 +15,8 @@
   // 任务列表
   let taskList = []
 
-  // 并发执行函数生成器
-  const concurrentGenerator = (func, maxConcurrentCount) => {
-    // 等待中的任务队列
-    const pendingTaskQueue = []
-    // 当前并发任务数
-    let currentTaskCount = 0
-
-    // 创建任务
-    const createTask = (caller, args, resolve, reject) => () => {
-      //更新当前并发任务数
-      currentTaskCount++
-
-      caller(...args)
-        .then(resolve)
-        .catch(reject)
-        .finally(() => {
-          //更新当前并发任务数
-          currentTaskCount--
-
-          // 检查任务队列中是否有未执行的任务，有则取出来执行
-          const task = pendingTaskQueue.pop()
-          typeof task === 'function' ? task() : console.warn('队列空闲')
-        })
-    }
-
-    return (...args) => (new Promise((resolve, reject) => {
-      const task = createTask(func, args, resolve, reject)
-      currentTaskCount < maxConcurrentCount
-        ? task()  // 空闲，则直接执行
-        : pendingTaskQueue.unshift(task)  // 繁忙，则放入队列等待执行
-    }))
-  }
-
-  // 测试并发执行函数生成器
-  // const concurrentGeneratorTester = (_, index) =>
-  //   new Promise(resolve => {
-  //     const timeout = Math.floor(Math.random() * 6)
-  //     setTimeout(resolve, timeout * 1000)
-  //     console.log(index, timeout)
-  //   })
-  // const targetFunc = concurrentGenerator(concurrentGeneratorTester, 2, 2000)
-  // Array(10).fill(true).forEach(targetFunc)
-
   // 请求函数
-  const _request = (functionId, body = {}) =>
+  const request = (functionId, body = {}) =>
     fetch('https://api.m.jd.com/client.action', {
       body: `functionId=${functionId}&body=${JSON.stringify(body)}&client=wh5`,
       headers: {
@@ -67,13 +24,7 @@
       },
       method: 'POST',
       credentials: 'include',
-    }).then(res => (new Promise(resolve => {
-      // 应用每个任务之间的执行间隔
-      setTimeout(resolve, REQUEST_INTERVAL, res)
-    })))
-
-  // 生成支持并发的请求函数
-  const request = concurrentGenerator(_request, 1)
+    })
 
   // 恢复被覆盖的 alert 函数，用于提醒用户
   ;(() => {
@@ -97,10 +48,10 @@
 
         return new Promise(resolve => {
           if (actionType) {
-            // 如果是领取任务，则延迟 (waitDuration + REQUEST_INTERVAL) 秒再继续执行任务
-            setTimeout(scoreCollector, (task.waitDuration + REQUEST_INTERVAL) * 1000, task, undefined, resolve)
+            // 如果是领取任务，则延迟 (waitDuration * 1000 + REQUEST_INTERVAL) 毫秒再继续执行任务
+            setTimeout(scoreCollector, task.waitDuration * 1000 + REQUEST_INTERVAL, task, undefined, resolve)
           } else {
-            // 如果是领取任务后的执行任务，或者执行普通任务，则延迟 REQUEST_INTERVAL 秒再返回
+            // 如果是领取任务后的执行任务，或者执行普通任务，则延迟 REQUEST_INTERVAL 毫秒再返回
             setTimeout(() => {
               lastResolve ? lastResolve() : resolve()
             }, REQUEST_INTERVAL)
@@ -115,17 +66,22 @@
     })
       .then(res => res.json())
       .then(res => {
-        const viewProductVos = res.data.result.viewProductVos
-        viewProductVos.forEach(collection => {
-          Array(collection.maxTimes - collection.times)
+        const result = res.data.result
+
+        // 确认任务集合所在键名
+        const taskCollectionContentKeyName = Object.keys(result).find(
+          keyName => /Vos?$/.test(keyName)
+        )
+
+        result[taskCollectionContentKeyName].forEach(taskCollection => {
+          Array(taskCollection.maxTimes - taskCollection.times)
             .fill(true)
             .forEach((_, index) => {
-              const content = collection.productInfoVos[index]
-              taskList.push({
-                taskName: collection.taskName,
-                taskId: collection.taskId,
-                waitDuration: collection.waitDuration,
-                itemId: content.itemId
+              taskList.unshift({
+                taskName: taskCollection.taskName,
+                taskId: taskCollection.taskId,
+                waitDuration: taskCollection.waitDuration,
+                itemId: taskCollection.productInfoVos[index].itemId
               })
             })
         })
@@ -151,7 +107,7 @@
       // 批量生成任务
       for (const taskCollection of taskData.data.result.taskVos) {
         // 跳过部分邀请任务
-        if (/助力/.test(taskCollection.taskName)) continue
+        if (/助力|商圈|精选会员|/.test(taskCollection.taskName)) continue
 
         // 针对甄选优品任务的处理
         if (taskCollection['productInfoVos']) {
@@ -189,6 +145,8 @@
       // 开始收取分数
       for (const task of taskList)
         await scoreCollector(task, task.waitDuration ? 1 : undefined)
+
+      alert('任务完成')
     })
   }
 
