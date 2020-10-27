@@ -107,7 +107,7 @@
       // 批量生成任务
       for (const taskCollection of taskData.data.result.taskVos) {
         // 跳过部分邀请任务
-        if (/助力|商圈|精选会员|/.test(taskCollection.taskName)) continue
+        if (/助力|商圈|精选会员/.test(taskCollection.taskName)) continue
 
         // 针对甄选优品任务的处理
         if (taskCollection['productInfoVos']) {
