@@ -109,7 +109,7 @@
       // 批量生成主流程任务
       for (const taskCollection of taskData.data.result.taskVos) {
         // 跳过部分邀请任务
-        if (/助力|商圈|精选会员/.test(taskCollection.taskName)) continue
+        if (/助力|商圈|会员/.test(taskCollection.taskName)) continue
 
         // 针对甄选优品任务的处理
         if (taskCollection['productInfoVos']) {
@@ -168,6 +168,8 @@
         
         // 批量生成营业版图任务
         for (let shop of shops) {
+          console.log(`正在获取【${shop.name}】门店的任务`)
+
           await request(API.GET_TASK_DATA, {
             shopSign: shop.shopId
           })
