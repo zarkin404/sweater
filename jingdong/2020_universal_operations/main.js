@@ -1,6 +1,6 @@
 (() => {
   // 请求间隔，单位：毫秒（不能小于 2000 毫秒）
-  const REQUEST_INTERVAL = 2000
+  const REQUEST_INTERVAL = 3000
 
   // API 名称映射表
   const API = {
@@ -44,7 +44,7 @@
     })
       .then(res => res.json())
       .then(res => {
-        console.log((actionType ? '领取' : '执行') + '任务：', task, '，调用结果：', res)
+        console.log((actionType ? '领取' : '执行') + '任务：', task, '，调用结果：', res.data || res)
 
         return new Promise(resolve => {
           if (actionType) {
